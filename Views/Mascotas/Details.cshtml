@@ -1,0 +1,56 @@
+@model Mascota
+@{
+    ViewData["Title"] = $"Ficha de {Model.Nombre}";
+    string especie = Model switch
+    {
+        Perro => "Perro",
+        Gato => "Gato",
+        Ave => "Ave",
+        Tortuga => "Tortuga",
+        _ => "Mascota"
+    };
+}
+<a class="back-link" asp-action="Index">← Volver al listado</a>
+<section class="detail-card">
+    <div class="detail-header">
+        <div>
+            <p class="eyebrow">@especie · @Model.Codigo</p>
+            <h1>@Model.Nombre</h1>
+            <span class="status @(Model.Enfermo ? "status-sick" : "status-healthy")">@(Model.Enfermo ? "Necesita atención" : "Se encuentra bien")</span>
+        </div>
+        <span class="pet-icon pet-icon-large" aria-hidden="true">@especie.Substring(0, 1)</span>
+    </div>
+    <dl class="detail-grid">
+        <div><dt>Propietario</dt><dd>@Model.Propietario</dd></div>
+        <div><dt>Peso</dt><dd>@Model.Peso.ToString("0.##") kg</dd></div>
+        <div><dt>Sexo</dt><dd>@(Model.Sexo == "F" ? "Hembra" : "Macho")</dd></div>
+        <div><dt>Edad</dt><dd>@Model.Edad años</dd></div>
+        @switch (Model)
+        {
+            case Perro perro:
+                <div><dt>Raza</dt><dd>@perro.Raza</dd></div>
+                <div><dt>Tamaño</dt><dd>@perro.Tamano</dd></div>
+                break;
+            case Gato gato:
+                <div><dt>Raza</dt><dd>@gato.Raza</dd></div>
+                <div><dt>Esterilizado</dt><dd>@(gato.Esterilizado ? "Sí" : "No")</dd></div>
+                break;
+            case Ave ave:
+                <div><dt>Envergadura</dt><dd>@ave.Envergadura.ToString("0.##") cm</dd></div>
+                <div><dt>Puede volar</dt><dd>@(ave.PuedeVolar ? "Sí" : "No")</dd></div>
+                break;
+            case Tortuga tortuga:
+                <div><dt>Caparazón</dt><dd>@tortuga.TipoCaparazon</dd></div>
+                <div><dt>Acuática</dt><dd>@(tortuga.Acuatica ? "Sí" : "No")</dd></div>
+                break;
+        }
+    </dl>
+    <div class="form-actions detail-actions">
+        <form asp-action="CambiarEstado" asp-route-id="@Model.Codigo" method="post">
+            <button class="button button-secondary" type="submit">Marcar como @(Model.Enfermo ? "sana" : "enferma")</button>
+        </form>
+        <a class="button button-secondary" asp-action="Dosis" asp-route-id="@Model.Codigo">Calcular dosis</a>
+        <a class="button button-secondary" asp-action="Edit" asp-route-id="@Model.Codigo">Editar ficha</a>
+        <a class="button button-danger" asp-action="Delete" asp-route-id="@Model.Codigo">Eliminar</a>
+    </div>
+</section>

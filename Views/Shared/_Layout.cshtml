@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - VetAmiga</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="container nav-content">
+            <a class="brand" asp-controller="Mascotas" asp-action="Index" aria-label="VetAmiga, inicio">
+                <span class="brand-icon" aria-hidden="true">+</span>
+                <span>VetAmiga<small>Gestión veterinaria</small></span>
+            </a>
+            <nav aria-label="Navegación principal">
+                <a asp-controller="Mascotas" asp-action="Index">Mascotas</a>
+                <a asp-controller="Mascotas" asp-action="Dosis">Calcular dosis</a>
+                <a class="button button-small" asp-controller="Mascotas" asp-action="Create">+ Registrar mascota</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        @if (TempData["Mensaje"] is string mensaje)
+        {
+            <div class="notice" role="status">@mensaje</div>
+        }
+        @RenderBody()
+    </main>
+    <footer class="footer">
+        <div class="container">VetAmiga · Práctica 3 de IPC2 · Los datos se conservan mientras la aplicación está en ejecución.</div>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

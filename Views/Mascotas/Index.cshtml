@@ -1,0 +1,58 @@
+@model Mascota[]
+@{
+    ViewData["Title"] = "Mascotas";
+}
+<section class="hero">
+    <div>
+        <p class="eyebrow">PANEL DE CONTROL</p>
+        <h1>Tus pacientes, <span>bien cuidados.</span></h1>
+        <p class="hero-copy">Registra y administra la información de tus mascotas desde un solo lugar.</p>
+    </div>
+    <a class="button" asp-action="Create">+ Registrar mascota</a>
+</section>
+
+<div class="section-heading">
+    <div>
+        <h2>Mascotas registradas</h2>
+        <p>Usa el código de cada mascota para calcular su dosis.</p>
+    </div>
+    <span class="count-badge">@Model.Length @(Model.Length == 1 ? "mascota" : "mascotas")</span>
+</div>
+
+@if (Model.Length == 0)
+{
+    <section class="empty-state">
+        <span class="empty-icon" aria-hidden="true">♡</span>
+        <h2>Aún no hay pacientes</h2>
+        <p>Empieza registrando una mascota. Te guiaremos con los datos que debes completar.</p>
+        <a class="button" asp-action="Create">Registrar la primera mascota</a>
+    </section>
+}
+else
+{
+    <div class="pet-grid">
+        @foreach (Mascota mascota in Model)
+        {
+            string especie = mascota switch
+            {
+                Perro => "Perro",
+                Gato => "Gato",
+                Ave => "Ave",
+                Tortuga => "Tortuga",
+                _ => "Mascota"
+            };
+            <article class="pet-card">
+                <div class="pet-card-top">
+                    <span class="pet-icon" aria-hidden="true">@especie.Substring(0, 1)</span>
+                    <span class="status @(mascota.Enfermo ? "status-sick" : "status-healthy")">
+                        @(mascota.Enfermo ? "Necesita atención" : "Se encuentra bien")
+                    </span>
+                </div>
+                <p class="pet-type">@especie · @mascota.Codigo</p>
+                <h3>@mascota.Nombre</h3>
+                <p class="pet-meta">@mascota.Peso.ToString("0.##") kg <span>·</span> @(mascota.Sexo == "F" ? "Hembra" : "Macho")</p>
+                <a class="text-link" asp-action="Details" asp-route-id="@mascota.Codigo">Ver ficha <span aria-hidden="true">→</span></a>
+            </article>
+        }
+    </div>
+}

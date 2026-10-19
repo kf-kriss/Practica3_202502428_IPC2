@@ -1,0 +1,17 @@
+@model Mascota
+@{
+    ViewData["Title"] = "Eliminar mascota";
+}
+<a class="back-link" asp-action="Details" asp-route-id="@Model.Codigo">← Volver a la ficha</a>
+<section class="confirm-card">
+    <span class="empty-icon warning-icon" aria-hidden="true">!</span>
+    <p class="eyebrow">CONFIRMAR ELIMINACIÓN</p>
+    <h1>¿Eliminar a @Model.Nombre?</h1>
+    <p>Se eliminará la ficha de @Model.Nombre (@Model.Codigo). Esta acción no se puede deshacer.</p>
+    <div class="form-actions centered-actions">
+        <a class="button button-secondary" asp-action="Details" asp-route-id="@Model.Codigo">No, volver</a>
+        <form asp-action="DeleteConfirmed" asp-route-id="@Model.Codigo" method="post">
+            <button class="button button-danger" type="submit">Sí, eliminar mascota</button>
+        </form>
+    </div>
+</section>

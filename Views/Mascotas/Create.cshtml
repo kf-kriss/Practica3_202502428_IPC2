@@ -1,0 +1,17 @@
+@model MascotaFormViewModel
+@{
+    ViewData["Title"] = "Registrar mascota";
+}
+<a class="back-link" asp-action="Index">← Volver a mascotas</a>
+<section class="page-heading">
+    <p class="eyebrow">NUEVO PACIENTE</p>
+    <h1>Registra una mascota</h1>
+    <p>Completa sus datos. Los campos con opciones te ayudan a evitar errores.</p>
+</section>
+<form asp-action="Create" method="post" class="form-card">
+    <partial name="_MascotaForm" model="Model" />
+    <div class="form-actions">
+        <a class="button button-secondary" asp-action="Index">Cancelar</a>
+        <button class="button" type="submit">Guardar mascota</button>
+    </div>
+</form>

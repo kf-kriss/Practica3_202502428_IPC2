@@ -1,0 +1,103 @@
+@model MascotaFormViewModel
+<div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+<div class="form-grid">
+    <div class="field">
+        <label asp-for="Nombre"></label>
+        <input asp-for="Nombre" autocomplete="off" placeholder="Ej. Luna" />
+        <span asp-validation-for="Nombre" class="field-error"></span>
+    </div>
+    <div class="field">
+        <label asp-for="Propietario"></label>
+        <input asp-for="Propietario" autocomplete="name" placeholder="Nombre de quien la cuida" />
+        <span asp-validation-for="Propietario" class="field-error"></span>
+    </div>
+    <div class="field">
+        <label asp-for="Especie"></label>
+        @if (ViewData["SoloLecturaEspecie"] as bool? == true)
+        {
+            <input value="@Model.Especie" readonly />
+            <input asp-for="Especie" type="hidden" />
+        }
+        else
+        {
+            <select asp-for="Especie" id="Especie">
+                <option value="">Selecciona el tipo</option>
+                <option value="Perro">Perro</option>
+                <option value="Gato">Gato</option>
+                <option value="Ave">Ave</option>
+                <option value="Tortuga">Tortuga</option>
+            </select>
+        }
+        <span asp-validation-for="Especie" class="field-error"></span>
+    </div>
+    <div class="field">
+        <label asp-for="Sexo"></label>
+        <select asp-for="Sexo">
+            <option value="">Selecciona una opción</option>
+            <option value="F">Hembra</option>
+            <option value="M">Macho</option>
+        </select>
+        <span asp-validation-for="Sexo" class="field-error"></span>
+    </div>
+    <div class="field">
+        <label asp-for="Peso"></label>
+        <input asp-for="Peso" type="number" min="0.01" step="0.01" placeholder="Ej. 4.5" />
+        <span asp-validation-for="Peso" class="field-error"></span>
+    </div>
+    <div class="field">
+        <label asp-for="Edad"></label>
+        <input asp-for="Edad" type="number" min="0" max="200" step="1" placeholder="Ej. 3" />
+        <span asp-validation-for="Edad" class="field-error"></span>
+    </div>
+</div>
+
+<fieldset class="species-fields" data-species="Perro">
+    <legend>Datos del perro</legend>
+    <div class="form-grid">
+        <div class="field"><label asp-for="RazaPerro"></label><input asp-for="RazaPerro" placeholder="Ej. Mestizo" /><span asp-validation-for="RazaPerro" class="field-error"></span></div>
+        <div class="field"><label asp-for="Tamano"></label><select asp-for="Tamano"><option value="">Selecciona el tamaño</option><option>Pequeño</option><option>Mediano</option><option>Grande</option></select><span asp-validation-for="Tamano" class="field-error"></span></div>
+    </div>
+</fieldset>
+<fieldset class="species-fields" data-species="Gato">
+    <legend>Datos del gato</legend>
+    <div class="form-grid">
+        <div class="field"><label asp-for="RazaGato"></label><input asp-for="RazaGato" placeholder="Ej. Siamés" /><span asp-validation-for="RazaGato" class="field-error"></span></div>
+        <div class="field"><label asp-for="Esterilizado"></label><select asp-for="Esterilizado"><option value="">Selecciona Sí o No</option><option value="true">Sí</option><option value="false">No</option></select><span asp-validation-for="Esterilizado" class="field-error"></span></div>
+    </div>
+</fieldset>
+<fieldset class="species-fields" data-species="Ave">
+    <legend>Datos del ave</legend>
+    <div class="form-grid">
+        <div class="field"><label asp-for="Envergadura"></label><input asp-for="Envergadura" type="number" min="0" step="0.1" placeholder="Ej. 25" /><span asp-validation-for="Envergadura" class="field-error"></span></div>
+        <div class="field"><label asp-for="PuedeVolar"></label><select asp-for="PuedeVolar"><option value="">Selecciona Sí o No</option><option value="true">Sí</option><option value="false">No</option></select><span asp-validation-for="PuedeVolar" class="field-error"></span></div>
+    </div>
+</fieldset>
+<fieldset class="species-fields" data-species="Tortuga">
+    <legend>Datos de la tortuga</legend>
+    <div class="form-grid">
+        <div class="field"><label asp-for="TipoCaparazon"></label><input asp-for="TipoCaparazon" placeholder="Ej. Duro" /><span asp-validation-for="TipoCaparazon" class="field-error"></span></div>
+        <div class="field"><label asp-for="Acuatica"></label><select asp-for="Acuatica"><option value="">Selecciona Sí o No</option><option value="true">Sí</option><option value="false">No</option></select><span asp-validation-for="Acuatica" class="field-error"></span></div>
+    </div>
+</fieldset>
+
+<div class="field check-field">
+    <input asp-for="Enfermo" />
+    <label asp-for="Enfermo">La mascota está enferma</label>
+</div>
+
+@if (ViewData["SoloLecturaEspecie"] as bool? != true)
+{
+    <script>
+        (() => {
+            const tipo = document.getElementById("Especie");
+            const secciones = document.querySelectorAll(".species-fields");
+            const actualizar = () => {
+                secciones.forEach(seccion => {
+                    seccion.hidden = seccion.dataset.species !== tipo.value;
+                });
+            };
+            tipo.addEventListener("change", actualizar);
+            actualizar();
+        })();
+    </script>
+}
