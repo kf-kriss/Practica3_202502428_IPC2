@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "Practica1_V2.1_IPC2/1.0.0": {
+        "runtime": {
+          "Practica1_V2.1_IPC2.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Practica1_V2.1_IPC2/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
