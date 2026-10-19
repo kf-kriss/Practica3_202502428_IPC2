@@ -1,40 +1,48 @@
 @model DosisViewModel
 @{
     ViewData["Title"] = "Calcular dosis";
+    string porcentaje = Model.FactorDosis is double factor ? $"{factor * 100:0}%" : "";
 }
-<a class="back-link" asp-action="Index">← Volver a mascotas</a>
-<section class="page-heading">
-    <p class="eyebrow">HERRAMIENTA DE CÁLCULO</p>
-    <h1>Calcula una dosis</h1>
-    <p>Busca a la mascota por su código y escribe la dosis indicada por kilogramo.</p>
-</section>
-<form asp-action="Dosis" method="post" class="form-card compact-card">
+
+<a class="back-link" asp-action="Index">Volver al listado</a>
+<h1 class="page-title">Calcular dosis</h1>
+
+<form asp-action="Dosis" method="post" class="simple-form">
     <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+
     <div class="field">
-        <label asp-for="Codigo">Código de la mascota</label>
-        <input asp-for="Codigo" placeholder="Ej. No-00001" autocomplete="off" />
-        <span asp-validation-for="Codigo" class="field-error"></span>
-        <small>El código aparece en el listado y en la ficha de la mascota.</small>
+        <label asp-for="Especie"></label>
+        <select asp-for="Especie">
+            <option value="">Selecciona una especie</option>
+            <option value="Perro">Perro (100%)</option>
+            <option value="Gato">Gato (90%)</option>
+            <option value="Ave">Ave (50%)</option>
+            <option value="Tortuga">Tortuga (80%)</option>
+        </select>
+        <span asp-validation-for="Especie" class="field-error"></span>
     </div>
-    @if (!string.IsNullOrWhiteSpace(Model.NombreMascota))
-    {
-        <p class="selected-pet">Mascota seleccionada: <strong>@Model.NombreMascota</strong></p>
-    }
+
+    <div class="field">
+        <label asp-for="Peso"></label>
+        <input asp-for="Peso" type="number" min="0.01" step="0.01" />
+        <span asp-validation-for="Peso" class="field-error"></span>
+    </div>
+
     <div class="field">
         <label asp-for="DosisPorKg"></label>
-        <input asp-for="DosisPorKg" type="number" min="0" step="0.01" placeholder="Ej. 2.5" />
+        <input asp-for="DosisPorKg" type="number" min="0" step="0.01" />
         <span asp-validation-for="DosisPorKg" class="field-error"></span>
     </div>
-    <div class="form-actions">
-        <button class="button" type="submit">Calcular dosis</button>
-    </div>
+
+    <button class="button" type="submit">Calcular</button>
+
     @if (Model.DosisCalculada is double dosis)
     {
-        <div class="result-card" role="status">
-            <span>Resultado para @Model.NombreMascota</span>
-            <strong>@dosis.ToString("0.##") mg</strong>
-            <p>El cálculo aplica automáticamente el factor correspondiente a la especie.</p>
-        </div>
+        <p class="dose-result" role="status">
+            Resultado: <strong>@dosis.ToString("0.##") mg</strong>
+            (@Model.Especie, factor @porcentaje)
+        </p>
     }
-    <p class="medical-note">Este cálculo es para la práctica y no sustituye la indicación de un profesional veterinario.</p>
+
+    <p class="medical-note">El cálculo es para la práctica y no sustituye la indicación de un veterinario.</p>
 </form>

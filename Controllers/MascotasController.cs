@@ -116,33 +116,28 @@ public sealed class MascotasController(MascotasService servicio) : Controller
     }
 
     [HttpGet]
-    public IActionResult Dosis(string? id)
+    public IActionResult Dosis(string? especie, double? peso)
     {
-        if (string.IsNullOrWhiteSpace(id) || servicio.Buscar(id) is not { } mascota)
+        return View(new DosisViewModel
         {
-            return View(new DosisViewModel { Codigo = id ?? "" });
-        }
-
-        return View(new DosisViewModel { Codigo = mascota.Codigo, NombreMascota = mascota.Nombre });
+            Especie = especie ?? "",
+            Peso = peso is > 0 ? (decimal)peso.Value : 0
+        });
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Dosis(DosisViewModel formulario)
     {
-        Mascota? mascota = servicio.Buscar(formulario.Codigo);
-        if (mascota is null)
-        {
-            ModelState.AddModelError(nameof(formulario.Codigo), "No encontramos ese código. Compruébalo en el listado de mascotas.");
-        }
-
         if (!ModelState.IsValid)
         {
             return View(formulario);
         }
 
-        formulario.NombreMascota = mascota!.Nombre;
-        formulario.DosisCalculada = mascota.CalcularDosis((double)formulario.DosisPorKg);
+        formulario.DosisCalculada = Mascota.CalcularDosisPorTipo(
+            formulario.Especie,
+            (double)formulario.Peso,
+            (double)formulario.DosisPorKg);
         return View(formulario);
     }
 

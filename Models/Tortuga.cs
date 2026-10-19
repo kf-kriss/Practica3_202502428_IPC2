@@ -12,5 +12,5 @@ public sealed class Tortuga(
     public string TipoCaparazon { get; set; } = tipoCaparazon;
     public bool Acuatica { get; set; } = acuatica;
 
-    public override double CalcularDosis(double dosisPorKg) => Peso * dosisPorKg * 0.8;
+    public override double CalcularDosis(double dosisPorKg) => Mascota.CalcularDosisPorTipo("Tortuga", Peso, dosisPorKg);
 }

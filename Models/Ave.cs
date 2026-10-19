@@ -12,5 +12,5 @@ public sealed class Ave(
     public double Envergadura { get; set; } = envergadura;
     public bool PuedeVolar { get; set; } = puedeVolar;
 
-    public override double CalcularDosis(double dosisPorKg) => Peso * dosisPorKg * 0.5;
+    public override double CalcularDosis(double dosisPorKg) => Mascota.CalcularDosisPorTipo("Ave", Peso, dosisPorKg);
 }

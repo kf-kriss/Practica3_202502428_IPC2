@@ -12,5 +12,5 @@ public sealed class Gato(
     public string Raza { get; set; } = raza;
     public bool Esterilizado { get; set; } = esterilizado;
 
-    public override double CalcularDosis(double dosisPorKg) => Peso * dosisPorKg * 0.9;
+    public override double CalcularDosis(double dosisPorKg) => Mascota.CalcularDosisPorTipo("Gato", Peso, dosisPorKg);
 }

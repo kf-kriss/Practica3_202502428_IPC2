@@ -6,14 +6,14 @@ Aplicación web ASP.NET Core MVC para administrar pacientes veterinarios. Utiliz
 
 1. Abre una terminal en esta carpeta.
 2. Ejecuta `dotnet run --project .\Practica3_V2.1_IPC2.csproj`.
-3. Abre en el navegador la dirección local que muestra la terminal.
+3. Abre `http://localhost:5080` en el navegador. En VS Code, también puedes pulsar **F5** y seleccionar `Practica3_V2.1_IPC2`.
 
 ## Qué puedes hacer
 
 - Registrar perros, gatos, aves y tortugas.
 - Consultar, editar y eliminar fichas.
 - Cambiar el estado de salud entre sana y enferma.
-- Calcular dosis indicando los mg/kg; se aplica el factor de cada especie.
+- Calcular dosis seleccionando la especie del menú (con el porcentaje de ajuste), el peso y los mg/kg.
 
 Los códigos de mascota se muestran en el listado. Los datos se mantienen en memoria mientras la aplicación está en ejecución y se reinician al detenerla.
 

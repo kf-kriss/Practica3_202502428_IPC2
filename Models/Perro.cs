@@ -12,5 +12,5 @@ public sealed class Perro(
     public string Raza { get; set; } = raza;
     public string Tamano { get; set; } = tamano;
 
-    public override double CalcularDosis(double dosisPorKg) => Peso * dosisPorKg;
+    public override double CalcularDosis(double dosisPorKg) => Mascota.CalcularDosisPorTipo("Perro", Peso, dosisPorKg);
 }

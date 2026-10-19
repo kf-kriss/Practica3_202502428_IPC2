@@ -16,7 +16,7 @@
         <div>
             <p class="eyebrow">@especie · @Model.Codigo</p>
             <h1>@Model.Nombre</h1>
-            <span class="status @(Model.Enfermo ? "status-sick" : "status-healthy")">@(Model.Enfermo ? "Necesita atención" : "Se encuentra bien")</span>
+            <span class="status @(Model.Enfermo ? "status-sick" : "status-healthy")">@(Model.Enfermo ? "Enferma" : "Sana")</span>
         </div>
         <span class="pet-icon pet-icon-large" aria-hidden="true">@especie.Substring(0, 1)</span>
     </div>
@@ -49,7 +49,7 @@
         <form asp-action="CambiarEstado" asp-route-id="@Model.Codigo" method="post">
             <button class="button button-secondary" type="submit">Marcar como @(Model.Enfermo ? "sana" : "enferma")</button>
         </form>
-        <a class="button button-secondary" asp-action="Dosis" asp-route-id="@Model.Codigo">Calcular dosis</a>
+        <a class="button button-secondary" asp-action="Dosis" asp-route-especie="@especie" asp-route-peso="@Model.Peso">Calcular dosis</a>
         <a class="button button-secondary" asp-action="Edit" asp-route-id="@Model.Codigo">Editar ficha</a>
         <a class="button button-danger" asp-action="Delete" asp-route-id="@Model.Codigo">Eliminar</a>
     </div>

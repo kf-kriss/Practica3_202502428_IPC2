@@ -30,4 +30,22 @@ public abstract class Mascota
     }
 
     public abstract double CalcularDosis(double dosisPorKg);
+
+    public static double? IntentarObtenerFactorDosis(string especie) => especie switch
+    {
+        "Perro" => 1.0,
+        "Gato" => 0.9,
+        "Ave" => 0.5,
+        "Tortuga" => 0.8,
+        _ => null
+    };
+
+    public static double ObtenerFactorDosis(string especie) =>
+        IntentarObtenerFactorDosis(especie)
+        ?? throw new ArgumentOutOfRangeException(nameof(especie), "El tipo de mascota no es válido.");
+
+    public static double CalcularDosisPorTipo(string especie, double peso, double dosisPorKg)
+    {
+        return peso * dosisPorKg * ObtenerFactorDosis(especie);
+    }
 }
